@@ -47,16 +47,23 @@ func FindToDos(c *gin.Context) {
 	var todo []models.Todo
 	db.Find(&todo)
 	id := c.Query("activity_group_id")
+	// db.Where("activity_group_id = ?", id).Find(&todo)
 
-	if id != "" {
+	if id != ""{
 		db.Where("activity_group_id = ?", id).Find(&todo)
-		c.JSON(http.StatusOK, Response{
-			Status:"Success",
-			Message:"Success",
-			Data:todo,
-		})
-		return
+	}else{
+		db.Find(&todo)
 	}
+
+	// if id != "" {
+	// 	db.Where("activity_group_id = ?", id).Find(&todo)
+	// 	c.JSON(http.StatusOK, Response{
+	// 		Status:"Success",
+	// 		Message:"Success",
+	// 		Data:todo,
+	// 	})
+	// 	return
+	// }
 
 	c.JSON(http.StatusOK, Response{
 		Status:"Success",

@@ -87,7 +87,7 @@ func CreateActivityGroups(c *gin.Context) {
 	db.Create(&activity)
 	
 
-	c.JSON(http.StatusOK, Response{
+	c.JSON(http.StatusCreated, Response{
 		Status:"Success",
 		Message:"Success",
 		Data:CreatedResponse{
@@ -136,7 +136,7 @@ func UpdateActivityGroups(c *gin.Context) {
 
     db.Model(&activity).Updates(updatedInput)
 
-    c.JSON(http.StatusCreated, Response{
+    c.JSON(http.StatusOK, Response{
 		Status:"Success",
 		Message:"Success",
 		Data:activity,
