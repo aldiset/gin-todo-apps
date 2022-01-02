@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type ToDo struct {
+type Todo struct {
 
 	Id					uint		`json:"id" gorm:"primary_key"`
 	ActivityGroupId		int			`json:"activity_group_id"`

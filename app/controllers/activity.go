@@ -71,6 +71,16 @@ func CreateActivityGroups(c *gin.Context) {
 	err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
+
+	if input.Title == "" {
+		c.JSON(http.StatusBadRequest, Response{
+			Status:"Bad Request",
+			Message:"title cannot be null",
+			Data:NullResponse{},
+		})
+		return
+	}
+
 	activity := models.Activity{Title: input.Title, Email: input.Email}
 
 	db := c.MustGet("db").(*gorm.DB)

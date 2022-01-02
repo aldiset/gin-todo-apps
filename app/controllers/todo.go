@@ -44,7 +44,7 @@ type UpdatedaToDoResponse struct {
 
 func FindToDos(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
-	var todo []models.ToDo
+	var todo []models.Todo
 	db.Find(&todo)
 	id := c.Query("activity_group_id")
 
@@ -66,14 +66,14 @@ func FindToDos(c *gin.Context) {
 }
 
 func FindToDo(c *gin.Context) {
-	var todo models.ToDo
+	var todo models.Todo
 	db := c.MustGet("db").(*gorm.DB)
 	if err := db.Where("id = ?", c.Param("id")).First(&todo).Error;
 	 
 	err != nil {
         c.JSON(http.StatusNotFound, Response{
 			Status: "Not Found",
-			Message: "ToDo with ID "+c.Param("id")+" Not Found",
+			Message: "Todo with ID "+c.Param("id")+" Not Found",
 			Data: NullResponse{},
 		})
         return
@@ -105,7 +105,7 @@ func CreateToDo(c *gin.Context) {
 	}
 	if input.ActivityGroupId == 0 {
 		c.JSON(http.StatusBadRequest, Response{
-			Status:"Bad request",
+			Status:"Bad Request",
 			Message:"activity_group_id cannot be null",
 			Data:NullResponse{},
 		})
@@ -113,14 +113,14 @@ func CreateToDo(c *gin.Context) {
 	}
 	if input.Title == "" {
 		c.JSON(http.StatusBadRequest, Response{
-			Status:"Bad request",
+			Status:"Bad Request",
 			Message:"title cannot be null",
 			Data:NullResponse{},
 		})
 		return
 	}
 
-	todo := models.ToDo{ActivityGroupId: input.ActivityGroupId ,Title: input.Title}
+	todo := models.Todo{ActivityGroupId: input.ActivityGroupId ,Title: input.Title}
 
 	db := c.MustGet("db").(*gorm.DB)
 	db.Create(&todo)
@@ -144,7 +144,7 @@ func UpdateToDo(c *gin.Context) {
 
     db := c.MustGet("db").(*gorm.DB)
     // Get model if exist
-    var todo models.ToDo
+    var todo models.Todo
     if err := db.Where("id = ?", c.Param("id")).First(&todo).Error; err != nil {
         c.JSON(http.StatusNotFound, Response{
 			Status: "Not Found",
@@ -161,7 +161,7 @@ func UpdateToDo(c *gin.Context) {
         return
     }
 
-    var updatedInput models.ToDo
+    var updatedInput models.Todo
     updatedInput.Title = input.Title
 	updatedInput.IsActive= input.IsActive
 	updatedInput.UpdateAt = time.Now()
@@ -194,7 +194,7 @@ func UpdateToDo(c *gin.Context) {
 func DeleteToDo(c *gin.Context) {
     // Get model if exist
     db := c.MustGet("db").(*gorm.DB)
-    var todo models.ToDo
+    var todo models.Todo
     if err := db.Where("id = ?", c.Param("id")).First(&todo).Error; err != nil {
         c.JSON(http.StatusNotFound, Response{
 			Status: "Not Found",
