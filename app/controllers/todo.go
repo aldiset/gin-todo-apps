@@ -7,7 +7,7 @@ import (
 	"app/models"
 	"time"
 	"strconv"
-	// "gorm.io/hints"
+	
 )
 
 type CreateToDoInput struct {
@@ -46,26 +46,9 @@ type UpdatedaToDoResponse struct {
 func FindToDos(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var todo []models.Todo
-	// db.Find(&todo)
 	id := c.Query("activity_group_id")
-	// db.Where("activity_group_id = ?", id).Find(&todo)
+	
 	db.Find(&todo,id)
-	// if id != ""{
-	// 	db.Clauses(hints.UseIndex( "idx_user_name" )).Temukan(&User{}) 
-	// 	db.Where("activity_group_id = ?", id).Find(&todo)
-	// }else{
-	// 	db.Find(&todo)
-	// }
-
-	// if id != "" {
-	// 	db.Where("activity_group_id = ?", id).Find(&todo)
-	// 	c.JSON(http.StatusOK, Response{
-	// 		Status:"Success",
-	// 		Message:"Success",
-	// 		Data:todo,
-	// 	})
-	// 	return
-	// }
 
 	c.JSON(http.StatusOK, Response{
 		Status:"Success",
