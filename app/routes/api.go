@@ -7,6 +7,7 @@ import (
 )
 
 func SetupRoutes(db *gorm.DB) *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)

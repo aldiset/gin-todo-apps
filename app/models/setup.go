@@ -25,7 +25,11 @@ func SetupDB() *gorm.DB {
 
 	URL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_PORT, MYSQL_DBNAME)
 	
-	db, err := gorm.Open(mysql.Open(URL), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(URL), &gorm.Config{
+		SkipDefaultTransaction: true,
+		PrepareStmt: true,
+		DisableNestedTransaction: true,
+	})
 	
 	if err != nil {
 	panic(err.Error())

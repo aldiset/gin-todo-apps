@@ -48,12 +48,13 @@ func FindActivityGroups(c *gin.Context) {
 func FindActivityGroup(c *gin.Context) {
 	var activity models.Activity
 	db := c.MustGet("db").(*gorm.DB)
-	if err := db.Where("id = ?", c.Param("id")).First(&activity).Error;
+	id := c.Param("id")
+	if err := db.First(&activity,id).Error;
 	 
 	err != nil {
         c.JSON(http.StatusNotFound, Response{
 			Status: "Not Found",
-			Message: "Activity with ID "+c.Param("id")+" Not Found",
+			Message: "Activity with ID "+id+" Not Found",
 			Data: NullResponse{},
 		})
         return
@@ -105,10 +106,11 @@ func UpdateActivityGroups(c *gin.Context) {
     db := c.MustGet("db").(*gorm.DB)
     // Get model if exist
     var activity models.Activity
-    if err := db.Where("id = ?", c.Param("id")).First(&activity).Error; err != nil {
+	id := c.Param("id")
+    if err := db.First(&activity,id).Error; err != nil {
         c.JSON(http.StatusNotFound, Response{
 			Status: "Not Found",
-			Message: "Activity with ID "+c.Param("id")+" Not Found",
+			Message: "Activity with ID "+id+" Not Found",
 			Data: NullResponse{},
 		})
         return
@@ -147,10 +149,11 @@ func DeleteActivityGroups(c *gin.Context) {
     // Get model if exist
     db := c.MustGet("db").(*gorm.DB)
     var activity models.Activity
-    if err := db.Where("id = ?", c.Param("id")).First(&activity).Error; err != nil {
+	id := c.Param("id")
+    if err := db.First(&activity,id).Error; err != nil {
         c.JSON(http.StatusNotFound, Response{
 			Status: "Not Found",
-			Message: "Activity with ID "+c.Param("id")+" Not Found",
+			Message: "Activity with ID "+id+" Not Found",
 			Data: NullResponse{},})
         return
     }
