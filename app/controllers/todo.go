@@ -7,7 +7,11 @@ import (
 	"app/models"
 	"time"
 	"strconv"
+<<<<<<< HEAD
 	"gorm.io/hints"
+=======
+	
+>>>>>>> 24cf106e8429343bc23ff7b53f8f5db7a81aece3
 )
 
 type CreateToDoInput struct {
@@ -47,9 +51,15 @@ func FindToDos(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var todo []models.Todo
 	id := c.Query("activity_group_id")
+<<<<<<< HEAD
 	// db.Clauses(hints.New("hint")).Find(&todo,id)
 	db.Clauses(hints.UseIndex("idx")).Find(&todo,id)
 	
+=======
+	
+	db.Find(&todo,id)
+
+>>>>>>> 24cf106e8429343bc23ff7b53f8f5db7a81aece3
 	c.JSON(http.StatusOK, Response{
 		Status:"Success",
 		Message:"Success",
